@@ -3,8 +3,12 @@ import {Link} from "expo-router";
 import {images} from "@/constants/images";
 import {icons} from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+    // Add router hook
+    const router = useRouter();
+
     return (
        //  Add background to home page
        <View className="flex-1 bg-primary">
@@ -16,7 +20,13 @@ export default function Index() {
             <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
 
                <View className="flex-1 mt-5">
-                   <SearchBar />
+                   <SearchBar
+                    /*  Add search function to search movies to route to search URL */
+                    onPress={() =>
+                        router.push("/search")}
+                        placeholder="Search for a movie"
+
+                   />
                </View>
            </ScrollView>
        </View>
