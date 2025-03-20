@@ -8,7 +8,7 @@ export const TMDB_CONFIG = {
     }
 }
 
-
+// fetch movies from a query
 export const fetchMovies = async ({query}: { query: string }) => {
     // get movie data based on user's searched movie or based on the query
     const endpoint = query
@@ -25,7 +25,7 @@ export const fetchMovies = async ({query}: { query: string }) => {
         throw new Error('Failed to fetch movies', response.statusText);
     }
     const data = await response.json();
-
+    // store data on movie results
     return data.results;
 }
 // /discover/movie
