@@ -16,7 +16,7 @@ export default function Index() {
         loading: moviesLoading,
         error: moviesError
     } = useFetch(() => fetchMovies({
-            query: ""
+        query: ""
     }))
 
     return (
@@ -39,7 +39,7 @@ export default function Index() {
                         color="#0000ff"
                         className="mt-10 self-center"
                     />
-                //  Display error if error occurs
+                    //  Display error if error occurs
                 ) : moviesError ? (
                     <Text>Error: {moviesError?.message}</Text>
                 ) : (
@@ -52,15 +52,28 @@ export default function Index() {
                         />
 
                         <>
-                        <Text className="text-lg text-white font-bold mt-5 mb-3">Latest Movies</Text>
-
-                        <FlatList
-                            data={movies}
-                            renderItem={({item}) => (
-                                <Text className="text-white text-sm">{item.title}</Text>
-                            )}
-                        />
-                    </>
+                            <Text className="text-lg text-white font-bold mt-5 mb-3">Latest Movies</Text>
+                            {/* Display movies organized into columns*/}
+                            <FlatList
+                                data={movies}
+                                renderItem={({item}) => (
+                                    <Text className="text-white text-sm">{item.title}</Text>
+                                )}
+                                /*Check out how many elements there are*/
+                                keyExtractor={(item) => item.id.toString()}
+                                /*Divide the elements into columns*/
+                                numColumns={3}
+                                /*Spread out the columns*/
+                                columnWrapperStyle={{
+                                    justifyContent: 'flex-start',
+                                    gap: 20,
+                                    paddingRight: 5,
+                                    marginBottom: 10
+                                }}
+                                className="mt-2 pb-32"
+                                scrollEnabled={false}
+                            />
+                        </>
                     </View>
                 )}
             </ScrollView>
