@@ -52,7 +52,7 @@ const Search = () => {
                             <SearchBar
                                 placeholder="Search movies..."
                                 value={searchQuery}
-                                onChangeText={(text: string) => setSearchQuery(text)}
+                                onChangeText={(text) => setSearchQuery(text)}
                             />
                         </View>
                         {/* Display loading movies indicator*/}
