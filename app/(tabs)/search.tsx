@@ -26,7 +26,7 @@ const Search = () => {
     }), false)
     // Re-fetch results when query changes
     useEffect(() => {
-        // Limit the time for requests to avoid overloading with results
+        // Limit the time for API requests to avoid overloading with results
         const timeoutId = setTimeout(async () => {
             if (searchQuery.trim()) {
                 await loadMovies();
@@ -56,7 +56,6 @@ const Search = () => {
                     marginVertical: 16
                 }}
                 contentContainerStyle={{paddingBottom: 100}}
-
                 ListHeaderComponent={
                     <>
                         {/* Add logo at header*/}
@@ -91,6 +90,16 @@ const Search = () => {
                                 </Text>
                             )}
                     </>
+                }
+                /* Display message if no movie is found*/
+                ListEmptyComponent={
+                    !loading && !error ? (
+                        <View className="mt-10 px-5">
+                            <Text className="text-center text-gray-500">
+                                {searchQuery.trim() ? 'No movies found' : 'Search for a movie'}
+                            </Text>
+                        </View>
+                    ) : null
                 }
             />
         </View>
