@@ -7,21 +7,37 @@ import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import {icons} from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const Search = () => {
     // Trigger search when user searches for a movie
     const [searchQuery, setSearchQuery] = useState('')
-    
+
 
     // Get data from API to get movie results
     const {
         data: movies,
         loading,
-        error
+        error,
+        refetch: loadMovies,
+        reset,
     } = useFetch(() => fetchMovies({
         query: searchQuery
     }), false)
+    // Re-fetch results when query changes
+    useEffect(() => {
+        // Limit the time for requests to avoid overloading with results
+        const timeoutId = setTimeout(async () => {
+            if (searchQuery.trim()) {
+                await loadMovies();
+            } else {
+                reset()
+            }
+        }, 500);
+
+        return () => clearTimeout(timeoutId);
+    }, [searchQuery])
+
     return (
         <View className="flex-1 bg-primary">
             <Image source={images.bg} className="flex-1 absolute w-full z-0" resizeMode="cover"/>
@@ -69,11 +85,11 @@ const Search = () => {
                         {
                             !loading && !error && searchQuery.trim()
                             && movies?.length > 0 && (
-                            <Text className="text-xl text-white font-bold">
-                                Search Results for{' '}
-                                <Text className="text-accent">{searchQuery}</Text>
-                            </Text>
-                        )}
+                                <Text className="text-xl text-white font-bold">
+                                    Search Results for{' '}
+                                    <Text className="text-accent">{searchQuery}</Text>
+                                </Text>
+                            )}
                     </>
                 }
             />
