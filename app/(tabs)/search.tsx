@@ -2,7 +2,6 @@
 import {ActivityIndicator, FlatList, Image, Text, View} from 'react-native'
 import {images} from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
-import {useRouter} from "expo-router";
 import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import {icons} from "@/constants/icons";
@@ -12,7 +11,7 @@ import {updateSearchCount} from "@/services/appwrite";
 
 const Search = () => {
     // Trigger search when user searches for a movie
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchQuery, setSearchQuery] = useState("");
 
 
     // Get data from API to get movie results
@@ -24,7 +23,7 @@ const Search = () => {
         reset,
     } = useFetch(() => fetchMovies({
         query: searchQuery
-    }), false)
+    }), false);
     // Re-fetch results when query changes
     useEffect(() => {
 
@@ -34,7 +33,7 @@ const Search = () => {
             if (searchQuery.trim()) {
                 await loadMovies();
 
-                if (movies?.length > 0 && movies?.[0]) {
+                if (movies?.length! > 0 && movies?.[0]) {
                     await updateSearchCount(searchQuery, movies[0]);
                 }
             } else {
