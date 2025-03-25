@@ -6,8 +6,8 @@ import {icons} from "@/constants/icons";
 interface Props {
     placeholder: string;
     onPress?: () => void;
-    value: string;
-    onChangeText: (text: string) => void;
+    value?: string;
+    onChangeText?: (text: string) => void;
 }
 
 // Add search bar to accept the props to make users able to search

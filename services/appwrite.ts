@@ -17,8 +17,6 @@ const database = new Databases(client);
 export const updateSearchCount = async (query: string, movie: Movie) => {
 
     try {
-
-
         const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
             Query.equal("searchTerm", query),
         ]);
@@ -26,7 +24,7 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
         //check if a record of that search has already been stored
         if (result.documents.length > 0) {
             const existingMovie = result.documents[0];
-
+// if document is found, increment the searchCount field
             await database.updateDocument(
                 DATABASE_ID,
                 COLLECTION_ID,
@@ -36,19 +34,20 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
                 }
             );
         } else {
-            //     Add a new document in the database
+            //if no document is found, create a new document in Appwrite database to 1
             await database.createDocument(DATABASE_ID, COLLECTION_ID, ID.unique(), {
                 searchTerm: query,
                 movie_id: movie.id,
+                title: movie.title,
                 count: 1,
                 poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            })
+            });
         }
     } catch (error) {
         console.log(error);
         throw error;
     }
 }
-// if document is found, increment the searchCount field
-//if no document is found, create a new document in Appwrite database to 1
+
+
 
