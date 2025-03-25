@@ -46,7 +46,7 @@ export const updateSearchCount = async (query: string, movie: Movie) => {
         }
     } catch (error) {
         console.log(error);
-        throw error;
+        throw error; 
     }
 }
 // if document is found, increment the searchCount field

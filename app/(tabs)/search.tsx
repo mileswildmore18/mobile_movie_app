@@ -8,6 +8,7 @@ import {fetchMovies} from "@/services/api";
 import {icons} from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
 import {useEffect, useState} from "react";
+import {updateSearchCount} from "@/services/appwrite";
 
 const Search = () => {
     // Trigger search when user searches for a movie
@@ -26,10 +27,15 @@ const Search = () => {
     }), false)
     // Re-fetch results when query changes
     useEffect(() => {
+
+
         // Limit the time for API requests to avoid overloading with results
         const timeoutId = setTimeout(async () => {
             if (searchQuery.trim()) {
                 await loadMovies();
+
+                if(movies?.length > 0 && movies?.[0])
+                await updateSearchCount(searchQuery, movies[0]);
             } else {
                 reset()
             }
