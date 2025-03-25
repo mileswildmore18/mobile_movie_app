@@ -7,6 +7,7 @@ import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import MovieCard from "@/components/MovieCard";
 import {getTrendingMovies} from "@/services/appwrite";
+import TrendingCard from "@/components/TrendingCard";
 
 export default function Index() {
     // Add router hook
@@ -76,8 +77,8 @@ export default function Index() {
                                 className="mb-4 mt-3"
                                 data={trendingMovies}
                                 renderItem={({item, index})=>(
-                                <Text className="text-white text-sm">{item.title}</Text>
-                            )}
+                                <TrendingCard movie={item} index={index}/>
+                                )}
                                 keyExtractor={(item) => item.movie_id.toString()}
                                       />
 
