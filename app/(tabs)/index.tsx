@@ -6,10 +6,18 @@ import {useRouter} from "expo-router";
 import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import MovieCard from "@/components/MovieCard";
+import {getTrendingMovies} from "@/services/appwrite";
 
 export default function Index() {
     // Add router hook
     const router = useRouter();
+
+    // Get data from trending movies
+    const {
+        data: trendingMovies,
+        loading: trendingLoading,
+        error: trendingError
+    } = useFetch(getTrendingMovies)
 
     // Get data from API to get movie results
     const {
@@ -34,15 +42,15 @@ export default function Index() {
                 <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto"/>
 
                 {/* Display loading indicator for movie*/}
-                {moviesLoading ? (
+                {moviesLoading || trendingLoading ? (
                     <ActivityIndicator
                         size="large"
                         color="#0000ff"
                         className="mt-10 self-center"
                     />
                     //  Display error if error occurs
-                ) : moviesError ? (
-                    <Text>Error: {moviesError?.message}</Text>
+                ) : moviesError ||trendingError ? (
+                    <Text>Error: {moviesError?.message || trendingError?.message}</Text>
                 ) : (
                     <View className="flex-1 mt-5">
                         <SearchBar
@@ -51,6 +59,12 @@ export default function Index() {
                                 router.push("/search")}}
                             placeholder="Search for a movie"
                         />
+                        {/* Display trending movies if they exist*/}
+                        {trendingMovies && (
+                            <View className="mt-10">
+                            <Text className="text-lg text-white font-bold mb-3">Trending Movies</Text>
+                            </View>
+                        )}
 
                         <>
                             <Text className="text-lg text-white font-bold mt-5 mb-3">Latest Movies</Text>
