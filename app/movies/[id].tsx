@@ -1,5 +1,4 @@
-import {Image, ScrollView, Text, View} from 'react-native'
-import React from 'react'
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
 import {useLocalSearchParams} from "expo-router";
 import useFetch from "@/services/useFetch";
 import {fetchMovieDetails} from "@/services/api";
@@ -73,13 +72,34 @@ const MovieDetails = () => {
                     <MovieInfo label="Genres" value={movie?.genres?.map((g) => g.name).join(' - ') || 'N/A'}/>
                     {/*Display the budget and the revenue of the movie*/}
                     <View className="flex flex-row justify-between w-1/2">
-                        <MovieInfo label="Budget" value={`$${movie?.budget / 1_000_000} million`}/>
-                        <MovieInfo label="Revenue" value={`$${Math.round(movie?.revenue) / 1_000_000}`}/>
+                        <MovieInfo
+                            label="Budget"
+                            value={`$${movie?.budget / 1_000_000} million`}
+                        />
+                        <MovieInfo
+                            label="Revenue"
+                            value={`$${Math.round(movie?.revenue) / 1_000_000}`}
+                        />
                     </View>
+                    {/*Display the production companies of the movie*/}
+                    <MovieInfo
+                        label="Production Companies"
+                        value={movie?.production_companies.map((c) => c.name).join(' - ') || 'N/A'}
+                    />
                 </View>
             </ScrollView>
+            {/* Add back button to go back to the previous page*/}
+            <TouchableOpacity
+                className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50">
+                <Image
+                    source={icons.arrow}
+                    className="size-5 mr-1 mt-0.5 rotate-180"
+                    tintColor="#fff"
+                />
+                <Text className="text-white font-semibold text-base">Go back</Text>
+            </TouchableOpacity>
         </View>
-    )
-}
+    );
+};
 export default MovieDetails
 
