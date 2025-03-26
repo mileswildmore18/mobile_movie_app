@@ -1,5 +1,5 @@
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
-import {useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams} from "expo-router";
 import useFetch from "@/services/useFetch";
 import {fetchMovieDetails} from "@/services/api";
 import {icons} from "@/constants/icons";
@@ -56,7 +56,10 @@ const MovieDetails = () => {
                     </View>
                     {/* Display movie rating*/}
                     <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-2">
-                        <Image source={icons.star} className="size-4"/>
+                        <Image
+                            source={icons.star}
+                            className="size-4"
+                        />
                         {/*Display movie rating rounding up the nearest whole number*/}
                         <Text className="text-white font-bold text-sm">
                             {Math.round(movie?.vote_average ?? 0)}/10
@@ -67,9 +70,15 @@ const MovieDetails = () => {
                         </Text>
                     </View>
                     {/*Display overview plot of the movie*/}
-                    <MovieInfo label="Overview" value={movie?.overview}/>
+                    <MovieInfo
+                        label="Overview"
+                        value={movie?.overview}
+                    />
                     {/*Display the genre of the movie*/}
-                    <MovieInfo label="Genres" value={movie?.genres?.map((g) => g.name).join(' - ') || 'N/A'}/>
+                    <MovieInfo
+                        label="Genres"
+                        value={movie?.genres?.map((g) => g.name).join(' - ') || 'N/A'}
+                    />
                     {/*Display the budget and the revenue of the movie*/}
                     <View className="flex flex-row justify-between w-1/2">
                         <MovieInfo
@@ -90,7 +99,9 @@ const MovieDetails = () => {
             </ScrollView>
             {/* Add back button to go back to the previous page*/}
             <TouchableOpacity
-                className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50">
+                className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
+                onPress={router.back}
+            >
                 <Image
                     source={icons.arrow}
                     className="size-5 mr-1 mt-0.5 rotate-180"
