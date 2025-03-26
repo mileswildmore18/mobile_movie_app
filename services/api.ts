@@ -29,3 +29,26 @@ export const fetchMovies = async ({query}: { query: string }) => {
     return data.results;
 }
 // /discover/movie
+
+// fetch movie details
+export const fetchMovieDetails = async (movieId: string): Promise<MovieDetails> => {
+    try {
+        const response = await fetch(`${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}`,{
+            method: 'GET',
+            headers: TMDB_CONFIG.headers,
+        });
+        // check if response to fetching the movie details fails
+        if(!response.ok) throw new Error('Failed to fetch movie details');
+
+        // gather movie detail data if response is successful and store it in the database
+        const data = await response.json();
+
+        // return movie details to user
+        return data;
+
+        // give error message if movie details fail to fetch
+    } catch (error){
+        console.log(error);
+        throw error;
+    }
+}
