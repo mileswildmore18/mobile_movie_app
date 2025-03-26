@@ -1,4 +1,4 @@
-import {Image, ScrollView, Text, View} from 'react-native'
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native'
 import React from 'react'
 import {useLocalSearchParams} from "expo-router";
 import useFetch from "@/services/useFetch";
@@ -8,7 +8,7 @@ import {icons} from "@/constants/icons";
 // Add a reusable component for different movies
 interface MovieInfoProps {
     label: string;
-    value?: string | number | null;
+    value: string | number | null;
 }
 
 const MovieInfo = ({ label, value}: MovieInfoProps) => (
